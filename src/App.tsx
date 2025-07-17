@@ -12,6 +12,7 @@ import "./styles/style.scss";
 import { updateUserInfo } from "./redux/slices/UserSlice";
 import ApiAuth from "./api/ApiAuth";
 import { useQueryClient } from "@tanstack/react-query";
+import Top100Details from "@components/Top100Details";
 function App() {
   // const dispatch = useDispatch();
   // const {accessToken} = useSelector(
@@ -46,6 +47,7 @@ function App() {
               }
             >
               <Route path="/" element={<Home />} />
+              <Route path="/top100/:id" element={<Top100Details />} />
             </Route>
           </Route>
         </Routes>

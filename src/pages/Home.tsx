@@ -1,6 +1,7 @@
 import React from "react";
-
-
+import "../styles/global.scss";
+import "../styles/style.scss";
+import { Link } from "react-router-dom";
 const todayAlbums = [
     { title: "Nhạc Phim", img: "/image/default-music.png", artist: "Nhiều nghệ sĩ" },
     { title: "Nhạc Remix", img: "/image/default-music.png", artist: "DJ Remix" },
@@ -33,55 +34,59 @@ const favoriteArtists = [
     { name: "Bằng Kiều", img: "/image/default-avatar.png", songs: 0, favorite: 7 },
     { name: "Hà Anh Tuấn", img: "/image/default-avatar.png", songs: 0, favorite: 5 },
 ];
+
 const Home: React.FC = () => (
-    <div className="home-content" style={{ padding: 24, background: '#230505', minHeight: '100vh' }}>
-        <h2 style={{ color: '#fff', fontSize: 28, marginBottom: 16 }}>What to listen today</h2>
-        <div style={{ display: 'flex', gap: 24, marginBottom: 32, flexWrap: 'wrap' }}>
+    <div className="home-content">
+        <h2 className="section-title">What to listen today</h2>
+        <div className="album-list">
             {todayAlbums.map((album, idx) => (
-                <div key={idx} style={{ width: 120, textAlign: 'center', background: '#2d0a0a', borderRadius: 12, padding: 12 }}>
-                    <img src={album.img} alt={album.title} style={{ width: 96, height: 96, borderRadius: 12, objectFit: 'cover', margin: '0 auto' }} />
-                    <div style={{ color: '#fff', marginTop: 8, fontWeight: 600 }}>{album.title}</div>
+                <div className="album-item" key={idx}>
+                    <img src={album.img} alt={album.title} />
+                    <div className="album-title">{album.title}</div>
                 </div>
             ))}
         </div>
-        <h2 style={{ color: '#fff', fontSize: 28, marginBottom: 16 }}>TOP 100 Music</h2>
-        <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
-            {top100.map((album, idx) => (
-                <div key={idx} style={{ width: 160, background: '#2d0a0a', borderRadius: 12, padding: 12, marginBottom: 16 }}>
-                    <img src={album.img} alt={album.title} style={{ width: 140, height: 140, borderRadius: 12, objectFit: 'cover', margin: '0 auto' }} />
-                    <div style={{ color: '#fff', marginTop: 8, fontWeight: 600 }}>{album.title}</div>
-                    <div style={{ color: '#ccc', fontSize: 14 }}>{album.artist}</div>
-                </div>
+
+        <h2 className="section-title">TOP 100 Music</h2>
+        <div className="top100-list">
+            {top100.map((item, idx) => (
+                <Link
+                    to={`/top100/${idx}`}
+                    className="top100-item"
+                    key={idx}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                >
+                    <img src={item.img} alt={item.title} />
+                    <div className="top100-title">{item.title}</div>
+                    <div className="top100-artist">{item.artist}</div>
+                </Link>
             ))}
         </div>
-        <h2 style={{ color: '#fff', fontSize: 28, marginBottom: 16 }}>YouTube Trending</h2>
-        <div style={{ display: 'flex', gap: 24, marginBottom: 32, flexWrap: 'wrap' }}>
-            {youtubeTrending.map((item, idx) => (
-                <div key={idx} style={{ width: 220, background: '#2d0a0a', borderRadius: 12, padding: 12 }}>
-                    <div style={{ position: "relative" }}>
-                        <img src={item.img} alt={item.title} style={{ width: "100%", height: 120, borderRadius: 12, objectFit: "cover" }} />
-                        <span style={{
-                            position: "absolute", right: 8, bottom: 8, background: "rgba(0,0,0,0.7)", color: "#fff",
-                            fontSize: 12, borderRadius: 4, padding: "2px 6px"
-                        }}>{item.duration}</span>
+
+        <h2 className="section-title">YouTube Trending</h2>
+        <div className="youtube-list">
+            {youtubeTrending.map((yt, idx) => (
+                <div className="youtube-card" key={idx}>
+                    <div className="youtube-thumb">
+                        <img src={yt.img} alt={yt.title} />
+                        <span className="youtube-duration">{yt.duration}</span>
                     </div>
-                    <div style={{ color: '#fff', marginTop: 8, fontWeight: 600, fontSize: 16, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.title}</div>
-                    <div style={{ color: '#ccc', fontSize: 14, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.channel}</div>
+                    <div className="youtube-title">{yt.title}</div>
+                    <div className="youtube-channel">{yt.channel}</div>
                 </div>
             ))}
         </div>
-        <h2 style={{ color: '#fff', fontSize: 28, marginBottom: 16 }}>Favorite artist</h2>
-        <div style={{ display: 'flex', gap: 32, marginBottom: 32, flexWrap: 'wrap' }}>
-            {favoriteArtists.map((artist, idx) => (
-                <div key={idx} style={{ width: 180, textAlign: 'center' }}>
-                    <img src={artist.img} alt={artist.name} style={{ width: 120, height: 120, borderRadius: "50%", objectFit: "cover", margin: "0 auto", background: "#222" }} />
-                    <div style={{ color: '#fff', marginTop: 12, fontWeight: 600, fontSize: 18 }}>{artist.name}</div>
-                    <div style={{ color: '#ccc', fontSize: 14 }}>{artist.songs} Songs</div>
-                    <div style={{ color: '#ccc', fontSize: 14, marginBottom: 8 }}>{artist.favorite} Favorite</div>
-                    <button style={{
-                        background: "#ff5722", color: "#fff", border: "none", borderRadius: 24, padding: "8px 24px",
-                        fontWeight: 600, fontSize: 16, cursor: "pointer"
-                    }}>+ Favorite</button>
+
+        <h2 className="section-title">Favorite artist</h2>
+
+        <div className="artist-list">
+            {favoriteArtists.map((ar, idx) => (
+                <div className="artist-card" key={idx}>
+                    <img src={ar.img} alt={ar.name} />
+                    <div className="artist-name">{ar.name}</div>
+                    <div className="artist-info">{ar.songs} Songs</div>
+                    <div className="artist-info">{ar.favorite} Favorite</div>
+                    <button className="favorite-btn">+ Favorite</button>
                 </div>
             ))}
         </div>

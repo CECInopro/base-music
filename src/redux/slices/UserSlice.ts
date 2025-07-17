@@ -1,5 +1,5 @@
 // src/redux/slices/UserSlice.ts
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UserState {
   accessToken: string | null;
@@ -15,7 +15,7 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    updateUserInfo(state, action: PayloadAction<{accessToken: string; userInfo: any}>) {
+    updateUserInfo(state, action: PayloadAction<{ accessToken: string; userInfo: any }>) {
       state.accessToken = action.payload.accessToken;
       state.userInfo = action.payload.userInfo;
     },
@@ -26,5 +26,5 @@ const userSlice = createSlice({
   },
 });
 
-export const {updateUserInfo, logout} = userSlice.actions;
+export const { updateUserInfo, logout } = userSlice.actions;
 export default userSlice.reducer;
