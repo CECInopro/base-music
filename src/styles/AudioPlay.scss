@@ -1,13 +1,21 @@
 .custom-audio-player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     background: #18101b;
-    border-radius: 16px;
+    border-radius: 16px 16px 0 0;
     padding: 16px 24px;
     gap: 24px;
     color: #fff;
-    box-shadow: 0 2px 16px #0002;
-    margin: 16px 0;
+    box-shadow: 0 -2px 16px #0004;
+
+
+    animation: slideUp 0.4s ease;
 
     .player-info {
         display: flex;
@@ -69,5 +77,18 @@
             min-width: 36px;
             text-align: center;
         }
+    }
+}
+
+// Optional: hiệu ứng trượt lên khi xuất hiện GPT
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }

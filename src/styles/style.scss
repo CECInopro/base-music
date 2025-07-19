@@ -125,7 +125,7 @@
   }
 }
 
-.album-list,
+.song-list,
 .top100-list,
 .youtube-list,
 .artist-list {
@@ -137,13 +137,13 @@
   padding-bottom: 16px;
 }
 
-.album-item,
-.album-card {
+.song-item,
+.song-card {
   background: #2d0a0a;
   border-radius: 12px;
   padding: 12px;
   text-align: center;
-  width: 120px;
+  width: 150px;
 
   img {
     width: 96px;
@@ -158,10 +158,21 @@
     font-size: 14px;
   }
 
-  .album-title {
+  .song-title {
     color: #fff;
     margin-top: 8px;
     font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .song-artist {
+    color: #fff;
+    margin-top: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
@@ -267,14 +278,14 @@
   }
 }
 
-.album-item img,
+.song-item img,
 .top100-item img,
 .youtube-card img,
 .artist-card img {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.album-item:hover img,
+.song-item:hover img,
 .top100-item:hover img,
 .youtube-card:hover img,
 .artist-card:hover img {
