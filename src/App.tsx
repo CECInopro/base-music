@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Home from "./pages/Home";
+import Search from "./pages/Search";
 import { IRootState } from "./redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
@@ -48,6 +49,7 @@ function App() {
             >
               <Route path="/" element={<Home />} />
               <Route path="/top100/:id" element={<Top100Details />} />
+              <Route path="/search" element={<Search />} />
             </Route>
           </Route>
         </Routes>

@@ -1,9 +1,10 @@
-import {loginUser, logoutUser} from "@redux/slices/UserSlice";
-import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
-import {toast} from "react-toastify";
+// import {loginUser, logoutUser} from "@redux/slices/UserSlice";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import { toast } from 'react-toastify';
 import Config from "../config";
-import store, {persistor} from "../redux/store";
-import ListErrorMessage from "./ListErrorMessage";
+import { persistor } from "../redux/store";
+
+// import ListErrorMessage from "./ListErrorMessage";
 
 export interface IDataError {
   errorCode: string;
@@ -58,7 +59,7 @@ function logout(): void {
   persistor
     .purge()
     .then(() => {
-      store.dispatch(logoutUser());
+      // store.dispatch(logoutUser());
       window.location.assign(Config.PATHNAME.HOME);
     })
     .catch(() => {
@@ -68,7 +69,7 @@ function logout(): void {
 
 function handleLogout(content: string, isRequiredLogOut: boolean): void {
   if (!isRequiredLogOut) {
-    toast.warn(content);
+    toast.warning(content);
   } else {
     logout();
     toast.error(content);
@@ -76,51 +77,52 @@ function handleLogout(content: string, isRequiredLogOut: boolean): void {
 }
 
 function displayError(dataError: IDataError): void {
-  const {errorCode} = dataError;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { errorCode } = dataError;
   let errorMessage;
 
-  const error = ListErrorMessage.find((dt) => dt.error_code === errorCode);
-  if (error) {
-    errorMessage = error.description;
-  } else {
-    errorMessage = dataError.errorMessage ?? "Somethings Wrong";
-  }
+  // const error = ListErrorMessage.find((dt) => dt.error_code === errorCode);
+  // if (error) {
+  //   errorMessage = error.description;
+  // } else {
+  //   errorMessage = dataError.errorMessage ?? "Somethings Wrong";
+  // }
 
   toast.error(errorMessage);
 }
 
-function handleRefreshToken() {
-  return new Promise<void>((resolve, reject) => {
-    fetcher<IRefreshToken>(
-      {
-        url: "/auth/refresh-token",
-        method: "post",
-        data: {refreshToken: store.getState().user?.refreshToken},
-      },
-      {displayError: false},
-    )
-      .then((res) => {
-        store.dispatch(loginUser(res));
-        resolve();
-      })
-      .catch(() => {
-        reject();
-      });
-  });
-}
+// function handleRefreshToken() {
+//   return new Promise<void>((resolve, reject) => {
+//     fetcher<IRefreshToken>(
+//       {
+//         url: "/auth/refresh-token",
+//         method: "post",
+//         data: {refreshToken: store.getState().user?.refreshToken},
+//       },
+//       {displayError: false},
+//     )
+//       .then((res) => {
+//         store.dispatch(loginUser(res));
+//         resolve();
+//       })
+//       .catch(() => {
+//         reject();
+//       });
+//   });
+// }
 
 function getAuthorization(defaultOptions: IFetcherOptions) {
   if (defaultOptions.token) {
     return `Bearer ${defaultOptions.token}`;
   }
 
-  if (defaultOptions.withToken) {
-    const state = store.getState();
-    const token = state.user?.accessToken;
-    if (token) {
-      return `Bearer ${token}`;
-    }
-  }
+  // if (defaultOptions.withToken) {
+  //   const state = store.getState() as RootState;
+  //    const token = state.user?.accessToken;
+  //   if (token) {
+  //     return `Bearer ${token}`;
+  //   }
+  // }
 
   return undefined;
 }
@@ -140,13 +142,14 @@ function createApiClient(config: AxiosRequestConfig, options: IFetcherOptions) {
         ? "multipart/form-data"
         : "application/json",
       "Authorization": getAuthorization(defaultOptions),
-      "language": store.getState().settings.language?.slice(0, 2),
+      // "language": store.getState().settings.language?.slice(0, 2),
     },
     baseURL: Config.NETWORK_CONFIG.API_BASE_URL,
     timeout: Config.NETWORK_CONFIG.TIMEOUT,
   });
 
-  return {apiClient, defaultOptions};
+
+  return { apiClient, defaultOptions };
 }
 
 function returnResponseData<T>(
@@ -220,7 +223,7 @@ async function processOtherCase<T, E>(
   };
   if (dataError?.errorCode === "1006") {
     try {
-      await handleRefreshToken();
+      // await handleRefreshToken();
       const data = await retryFetcher(config, options);
       resolve(data);
     } catch {
@@ -286,7 +289,7 @@ export async function fetcher<T>(
   config: AxiosRequestConfig,
   options: IFetcherOptions = {},
 ): Promise<T> {
-  const {apiClient, defaultOptions} = createApiClient(config, options);
+  const { apiClient, defaultOptions } = createApiClient(config, options);
 
   return new Promise<T>((resolve, reject) => {
     apiClient
@@ -326,7 +329,7 @@ export async function fetcherWithMetadata<T>(
   config: AxiosRequestConfig,
   options: IFetcherOptions = {},
 ): Promise<IDataWithMeta<T>> {
-  const {apiClient, defaultOptions} = createApiClient(config, options);
+  const { apiClient, defaultOptions } = createApiClient(config, options);
 
   return new Promise<IDataWithMeta<T>>((resolve, reject) => {
     apiClient
